@@ -12,7 +12,7 @@ import lombok.Data;
 public class News
 {
 	@Id
-	private int id;
+	private String id;
 	
 	private String newsHeading;
 	
@@ -22,8 +22,8 @@ public class News
 	
 	private String newsSubContent;
 	
-	@Embedded
-	private NewsCategory newsCategory;
+//	@Embedded
+//	private NewsCategory newsCategory;
 	private String author;
 	
 	private Date validFrom;
@@ -36,11 +36,11 @@ public class News
 	
 	List<Document> documents;
 	
-//	List<String> newsCategory;
+	List<NewsCategory> newsCategory;
 	
 	private String createdBy;
 	
-	private Date createdDate;
+	private Date createdDate=new Date();
 	
 	private String modifiedBy;
 	

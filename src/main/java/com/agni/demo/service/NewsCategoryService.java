@@ -7,5 +7,5 @@ import com.agni.demo.data.NewsCategory;
 public interface NewsCategoryService
 {
 
-	List<NewsCategory> saveNewsCategory();
+	List<NewsCategory> saveNewsCategory(List<NewsCategory> newscat);
 }

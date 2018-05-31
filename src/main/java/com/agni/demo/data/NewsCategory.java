@@ -10,13 +10,13 @@ import lombok.Data;
 public class NewsCategory
 {
 	@Id
-	private int id;
+	private String id;
 	
 	private String newsCategory;
 	
 	private String createdBy;
 	
-	private Date createdDate;
+	private Date createdDate=new Date();
 	
 	private String modifiedBy;
 	
