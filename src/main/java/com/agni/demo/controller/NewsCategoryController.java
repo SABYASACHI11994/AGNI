@@ -25,4 +25,10 @@ public class NewsCategoryController {
     	System.out.println(name);
         return newsCategoryService.saveNewsCategory(name);
     }
+    
+    @RequestMapping(value = "/getNewsCategory",method = { RequestMethod.GET })
+    public List<NewsCategory> getNewsCategory() {
+//    	System.out.println(name);
+        return newsCategoryService.getNewsCategory();
+    }
 }

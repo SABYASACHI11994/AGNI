@@ -8,4 +8,8 @@ public interface NewsCategoryService
 {
 
 	List<NewsCategory> saveNewsCategory(List<NewsCategory> newscat);
+	
+	List<NewsCategory> getNewsCategory();
+	
+	
 }

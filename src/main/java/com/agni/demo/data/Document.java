@@ -16,6 +16,10 @@ public class Document
 	
 	private String documentPath;
 	
+	private String documentData;
+	
+	private String documentType;
+	
 	private String createdBy;
 	
 	private Date createdDate;

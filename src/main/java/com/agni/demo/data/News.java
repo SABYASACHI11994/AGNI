@@ -30,13 +30,13 @@ public class News
 	
 	private Date validTill;
 	
-	List<Image> images;
+	private List<Image> images;
 	
-	List<String> links;
+	private List<String> links;
 	
-	List<Document> documents;
+	private List<Document> documents;
 	
-	List<NewsCategory> newsCategory;
+	private List<NewsCategory> newsCategory;
 	
 	private String createdBy;
 	

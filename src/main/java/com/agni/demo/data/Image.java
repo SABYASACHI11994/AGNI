@@ -16,6 +16,10 @@ public class Image
 	
 	private String imagePath;
 	
+	private String imageData;
+	
+	private String imageType;
+	
 	private String createdBy;
 	
 	private Date createdDate;

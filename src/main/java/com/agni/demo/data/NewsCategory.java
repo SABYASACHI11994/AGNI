@@ -1,6 +1,7 @@
 package com.agni.demo.data;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
@@ -13,6 +14,10 @@ public class NewsCategory
 	private String id;
 	
 	private String newsCategory;
+	
+	private String description;
+	
+	private List<String> image;
 	
 	private String createdBy;
 	
