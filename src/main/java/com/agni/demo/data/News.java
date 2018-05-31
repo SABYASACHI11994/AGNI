@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 
 import lombok.Data;
 
+
 @Data
 public class News
 {
@@ -21,6 +22,8 @@ public class News
 	
 	private String newsSubContent;
 	
+	@Embedded
+	private NewsCategory newsCategory;
 	private String author;
 	
 	private Date validFrom;
@@ -33,7 +36,7 @@ public class News
 	
 	List<Document> documents;
 	
-	List<String> newsCategory;
+//	List<String> newsCategory;
 	
 	private String createdBy;
 	
