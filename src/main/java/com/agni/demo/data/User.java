@@ -33,13 +33,13 @@ public class User
 	
 	private String password;
 	
-	private Boolean isActive;
+	private Boolean isActive=false;
 		
 	List<String> role;
 
 	private String createdBy;
 	
-	private Date createdDate;
+	private Date createdDate=new Date();
 	
 	private String modifiedBy;
 	

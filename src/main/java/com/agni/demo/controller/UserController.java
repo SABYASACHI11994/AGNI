@@ -18,7 +18,7 @@ public class UserController {
 	UserService userService;
 
 	@RequestMapping(value = "/login", method = { RequestMethod.POST })
-	public User getLatestNews(@RequestBody User name) {
+	public User getLatestNews(@RequestBody User name) throws Exception {
 		System.out.println(name);
 
 		return userService.login(name);
