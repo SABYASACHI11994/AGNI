@@ -13,6 +13,8 @@ public interface UserService
 	CreateUserMap saveu(User name) throws Exception;
 	
 	CreateUserMap activateUser(ObjectId id) throws Exception;
+	
+	CreateUserMap changePassword(User userdetails) throws Exception;
 
 	
 }

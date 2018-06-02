@@ -2,7 +2,6 @@ package com.agni.demo.data;
 
 import java.util.Date;
 import java.util.List;
-
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -47,6 +46,9 @@ public class User
 	private String domain;
 	
 	private String password;
+	
+	@Transient
+	private String newPassword;
 	
 	private Boolean isActive=false;
 		

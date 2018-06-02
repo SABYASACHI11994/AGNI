@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService
 		{
 			throw new Exception("User Already Exist");
 		}
-		
+
 		List<String> defaultRole = new ArrayList<>();
 		defaultRole.add("member");
 		name.setRole(defaultRole);
@@ -78,14 +78,13 @@ public class UserServiceImpl implements UserService
 	public CreateUserMap activateUser(ObjectId id) throws Exception
 	{
 		Optional<User> user = userRepository.findById(id);
-		
-		
-		 
-		 if(user.isPresent()) {
-			 
-		 user.get().setIsActive(true);
-		 
-		 User user1 = userRepository.save(user.get());
+
+		if (user.isPresent())
+		{
+
+			user.get().setIsActive(true);
+
+			User user1 = userRepository.save(user.get());
 
 			CreateUserMap createusermap = new CreateUserMap();
 			createusermap.setId(user1.getId());
@@ -94,9 +93,40 @@ public class UserServiceImpl implements UserService
 			createusermap.setEmail(user1.getEmail());
 
 			return createusermap;
-		 }
-		 
-		 throw new Exception("User does not exist.");
-	}
+		}
 
+		throw new Exception("User does not exist");
+	}
+	
+	
+
+	@Override
+	public CreateUserMap changePassword(User userdetails) throws Exception
+	{	
+		List<User> user = userRepository.findCompleteByEmail(userdetails.getEmail());
+		
+		if(user.isEmpty()){
+			throw new Exception("User does not exists with emailid - " +userdetails.getEmail());
+		}
+
+		if (userdetails.getPassword().equalsIgnoreCase(user.get(0).getPassword()) )
+		{
+			System.out.println(userdetails.toString());
+			user.get(0).setPassword(userdetails.getNewPassword());
+			
+			System.out.println("Pass - " + userdetails.getNewPassword());
+			System.out.println(user.toString());
+			User user1 = userRepository.save(user.get(0));
+
+			CreateUserMap createusermap = new CreateUserMap();
+			createusermap.setId(user1.getId());
+			createusermap.setFirstName(user1.getFirstName());
+			createusermap.setLastName(user1.getLastName());
+			createusermap.setEmail(user1.getEmail());
+
+			return createusermap;
+		}
+
+		throw new Exception("Old password did not match");
+	}
 }

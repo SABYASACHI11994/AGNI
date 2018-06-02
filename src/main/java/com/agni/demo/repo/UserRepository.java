@@ -1,7 +1,6 @@
 package com.agni.demo.repo;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -13,6 +12,8 @@ import com.agni.demo.data.UserInterface;
 public interface UserRepository extends MongoRepository<User, ObjectId> {
 
 	List<UserInterface> findByEmail(String name);
+	
+	List<User> findCompleteByEmail(String email);
 
 //	User saveAll(Optional<User> user);
 	
