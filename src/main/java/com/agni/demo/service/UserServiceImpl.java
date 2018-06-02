@@ -167,11 +167,7 @@ public class UserServiceImpl implements UserService
 
 		if (userdetails.getPassword().equalsIgnoreCase(user.get(0).getPassword()) )
 		{
-			System.out.println(userdetails.toString());
 			user.get(0).setPassword(userdetails.getNewPassword());
-			
-			System.out.println("Pass - " + userdetails.getNewPassword());
-			System.out.println(user.toString());
 			User user1 = userRepository.save(user.get(0));
 
 			CreateUserMap createusermap = new CreateUserMap();
@@ -185,4 +181,27 @@ public class UserServiceImpl implements UserService
 
 		throw new Exception("Old password did not match");
 	}
+	
+	@Override
+	public CreateUserMap changeRole(User userdetails) throws Exception
+	{	
+		List<User> user = userRepository.findCompleteByEmail(userdetails.getEmail());
+		
+		if(user.isEmpty()){
+			throw new Exception("User does not exists with emailid - " +userdetails.getEmail());
+		}
+		
+			user.get(0).setRole(userdetails.getRole());
+			
+			User user1 = userRepository.save(user.get(0));
+
+			CreateUserMap createusermap = new CreateUserMap();
+			createusermap.setId(user1.getId());
+			createusermap.setFirstName(user1.getFirstName());
+			createusermap.setLastName(user1.getLastName());
+			createusermap.setEmail(user1.getEmail());
+
+			return createusermap;
+	}
 }
+
