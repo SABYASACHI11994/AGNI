@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
 import com.agni.demo.data.Login;
-=======
 import com.agni.demo.data.CreateUserMap;
->>>>>>> 59f6e8c84cef16b876e3cfc55d82e1500febfd3c
 import com.agni.demo.data.User;
 import com.agni.demo.service.UserService;
 import com.agni.demo.util.OutputResponse;
