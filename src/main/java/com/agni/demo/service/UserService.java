@@ -1,6 +1,9 @@
 package com.agni.demo.service;
 
 import com.agni.demo.data.Login;
+import org.bson.types.ObjectId;
+
+import com.agni.demo.data.CreateUserMap;
 import com.agni.demo.data.User;
 
 public interface UserService
@@ -8,9 +11,13 @@ public interface UserService
 
 	Login login(User name) throws Exception;
 
-	User saveu(User name);
+	CreateUserMap saveu(User name) throws Exception;
 	
-	String activateUser(User name);
+	CreateUserMap activateUser(ObjectId id) throws Exception;
 	
 	Integer logout(String authkey);
+
+	CreateUserMap changePassword(User userdetails) throws Exception;
+
+	
 }

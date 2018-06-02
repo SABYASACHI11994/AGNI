@@ -3,21 +3,25 @@ package com.agni.demo.service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agni.demo.data.Login;
 import com.agni.demo.data.Session;
+import com.agni.demo.data.CreateUserMap;
 import com.agni.demo.data.User;
 import com.agni.demo.data.UserInterface;
 import com.agni.demo.repo.SessionRepository;
 import com.agni.demo.repo.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService
+{
 
 	@Autowired
 	UserRepository userRepository;
@@ -26,15 +30,20 @@ public class UserServiceImpl implements UserService {
 	SessionRepository sessionRepository;
 
 	@Override
-	public Login login(User name) throws Exception {
+
+	public Login login(User name) throws Exception
+	{
 		// TODO Auto-generated method stub
 		Login login=new Login();
 		List<UserInterface> userdata = userRepository.findByEmail(name.getEmail());
-		Optional<User> nameData=null;
+		Optional<User> nameData = null;
 		System.out.println(userdata);
-		if (userdata.size() > 0) {
-			if (userdata.get(0).getIsActive()) {
-				if (checkPassword(name.getPassword(), userdata.get(0).getPassword())) {
+		if (userdata.size() > 0)
+		{
+			if (userdata.get(0).getIsActive())
+			{
+				if (checkPassword(name.getPassword(), userdata.get(0).getPassword()))
+				{
 					nameData = userRepository.findById(userdata.get(0).getId());
 //					nameData.get().setCreatedDate(new Date());
 //					nameData.get().setModifiedDate(new Date());
@@ -62,33 +71,61 @@ public class UserServiceImpl implements UserService {
 		return login;
 	}
 
-	private boolean checkPassword(String password, String password2) {
+	private boolean checkPassword(String password, String password2)
+	{
 		// TODO Auto-generated method stub
 
 		return password.equals(password2);
 	}
 
 	@Override
-	public User saveu(User name) {
-		// TODO Auto-generated method stub
+	public CreateUserMap saveu(User name) throws Exception
+	{
 
-		return userRepository.save(name);
+		List<UserInterface> userpartialdata = userRepository.findByEmail(name.getEmail());
+		if (userpartialdata.size() > 0)
+		{
+			throw new Exception("User Already Exist");
+		}
+
+		List<String> defaultRole = new ArrayList<>();
+		defaultRole.add("member");
+		name.setRole(defaultRole);
+		User user = userRepository.save(name);
+
+		CreateUserMap createusermap = new CreateUserMap();
+		createusermap.setId(user.getId());
+		createusermap.setFirstName(user.getFirstName());
+		createusermap.setLastName(user.getLastName());
+		createusermap.setEmail(user.getEmail());
+
+		return createusermap;
+
 	}
 
-
 	
-	public String activateUser(User name)
+	@Override
+	public CreateUserMap activateUser(ObjectId id) throws Exception
 	{
-		List<UserInterface> userpartialdata = userRepository.findByEmail(name.getEmail());
-		
-		if(userpartialdata.isEmpty()){
-			
-			return "User Not Found";
-			
-		}else
-		// userpartialdata.get(0).getisActive()
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> user = userRepository.findById(id);
+
+		if (user.isPresent())
+		{
+
+			user.get().setIsActive(true);
+
+			User user1 = userRepository.save(user.get());
+
+			CreateUserMap createusermap = new CreateUserMap();
+			createusermap.setId(user1.getId());
+			createusermap.setFirstName(user1.getFirstName());
+			createusermap.setLastName(user1.getLastName());
+			createusermap.setEmail(user1.getEmail());
+
+			return createusermap;
+		}
+
+		throw new Exception("User does not exist");
 	}
 	
 	private String generateKey(String responseObj) throws NoSuchAlgorithmException
@@ -118,4 +155,34 @@ public class UserServiceImpl implements UserService {
 		return i;
 	}
 	
+
+	@Override
+	public CreateUserMap changePassword(User userdetails) throws Exception
+	{	
+		List<User> user = userRepository.findCompleteByEmail(userdetails.getEmail());
+		
+		if(user.isEmpty()){
+			throw new Exception("User does not exists with emailid - " +userdetails.getEmail());
+		}
+
+		if (userdetails.getPassword().equalsIgnoreCase(user.get(0).getPassword()) )
+		{
+			System.out.println(userdetails.toString());
+			user.get(0).setPassword(userdetails.getNewPassword());
+			
+			System.out.println("Pass - " + userdetails.getNewPassword());
+			System.out.println(user.toString());
+			User user1 = userRepository.save(user.get(0));
+
+			CreateUserMap createusermap = new CreateUserMap();
+			createusermap.setId(user1.getId());
+			createusermap.setFirstName(user1.getFirstName());
+			createusermap.setLastName(user1.getLastName());
+			createusermap.setEmail(user1.getEmail());
+
+			return createusermap;
+		}
+
+		throw new Exception("Old password did not match");
+	}
 }
