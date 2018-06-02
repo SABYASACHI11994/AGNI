@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.agni.demo.data.Login;
 import com.agni.demo.data.User;
 import com.agni.demo.service.UserService;
 import com.agni.demo.util.OutputResponse;
@@ -29,7 +30,23 @@ public class UserController {
 		
 		OutputResponse response=new OutputResponse();
 		try {
-			User user = userService.login(name);
+			Login user = userService.login(name);
+			response.setResponse(user.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+	}
+	
+	@RequestMapping(value = "/logout", method = { RequestMethod.POST })
+	public String logout(@RequestBody Login name)  {
+		System.out.println(name);
+		
+		OutputResponse response=new OutputResponse();
+		try {
+			Integer user = userService.logout(name.getAuthKey());
 			response.setResponse(user.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -54,7 +54,7 @@ public class OutputResponse {
 			this.data = new JsonParser().parse(RESPONSE.replace(RESPONSE_VALUE, message));
 		}
 		statusCode = SUCCESS;
-		errorMessage = "Success";
+		errorMessage = null;
 		status = "Success";
 
 	}
