@@ -9,8 +9,7 @@ public interface  UserInterface {
 	
 	String getEmail();
 	
-	String getPassword();
-	
+	String getPassword();	
 
 	Boolean getIsActive();
 }

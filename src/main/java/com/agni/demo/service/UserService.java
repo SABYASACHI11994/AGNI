@@ -1,5 +1,6 @@
 package com.agni.demo.service;
 
+import com.agni.demo.data.CreateUserMap;
 import com.agni.demo.data.User;
 
 public interface UserService
@@ -7,7 +8,7 @@ public interface UserService
 
 	User login(User name) throws Exception;
 
-	User saveu(User name);
+	CreateUserMap saveu(User name) throws Exception;
 	
 	String activateUser(User name);
 	

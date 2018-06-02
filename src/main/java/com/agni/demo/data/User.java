@@ -61,6 +61,9 @@ public class User
 	
 	private Date modifiedDate;
 	
+	@Expose
+	private String profileImage;
+	
 	@Transient
 	private OutputMapper outputMapper = new OutputMapper();
 
