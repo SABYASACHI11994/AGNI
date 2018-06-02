@@ -40,9 +40,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/user", method = { RequestMethod.POST })
-	public User user(@RequestBody User name) {
+	public String user(@RequestBody User name) {
 		System.out.println(name);
-
-		return userService.saveu(name);
+		OutputResponse response=new OutputResponse();
+		try {
+			User user = userService.saveu(name);
+			response.setResponse(user.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
 	}
 }
