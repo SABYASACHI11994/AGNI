@@ -18,6 +18,8 @@ import com.agni.demo.data.User;
 import com.agni.demo.data.UserInterface;
 import com.agni.demo.repo.SessionRepository;
 import com.agni.demo.repo.UserRepository;
+import com.agni.demo.util.ConfigProperties;
+import com.agni.demo.util.SMTPService;
 
 @Service
 public class UserServiceImpl implements UserService
@@ -28,9 +30,13 @@ public class UserServiceImpl implements UserService
 	
 	@Autowired
 	SessionRepository sessionRepository;
+	
+	private final String NAME_PARAMETER="NAME_PARAMETER";
+	private final String BASE_URL="BASE_URL";
+	private String activatelink=ConfigProperties.getPropertyByName("activate-link");
+	private String domain=ConfigProperties.getPropertyByName("domain-name");
 
 	@Override
-
 	public Login login(User name) throws Exception
 	{
 		// TODO Auto-generated method stub
@@ -99,6 +105,10 @@ public class UserServiceImpl implements UserService
 		createusermap.setLastName(user.getLastName());
 		createusermap.setEmail(user.getEmail());
 
+		String url=activatelink.replace(BASE_URL, domain).replace(NAME_PARAMETER, user.getId().toString());
+		System.out.println(url);
+		SMTPService.send(user.getEmail(), "Account Activation", "Log on to "+url+" to actiavte your account");
+		
 		return createusermap;
 
 	}
