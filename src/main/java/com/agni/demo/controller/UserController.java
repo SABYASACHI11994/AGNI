@@ -116,5 +116,21 @@ public class UserController
 		return response.toString();
 	}
 	
+	@RequestMapping(value = "/changerole", method = { RequestMethod.POST })
+	public String changeRole(@RequestBody User userdetails)
+	{
+		OutputResponse response = new OutputResponse();
+		try
+		{
+			CreateUserMap user = userService.changeRole(userdetails);
+			response.setResponse(user.toString());
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+	}
 	
 }

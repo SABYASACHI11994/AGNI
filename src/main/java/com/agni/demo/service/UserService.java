@@ -18,6 +18,8 @@ public interface UserService
 	Integer logout(String authkey);
 
 	CreateUserMap changePassword(User userdetails) throws Exception;
+	
+	CreateUserMap changeRole(User userdetails) throws Exception;
 
 	
 }
