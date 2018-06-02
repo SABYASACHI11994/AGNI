@@ -1,8 +1,11 @@
 package com.agni.demo.data;
 
+import org.bson.types.ObjectId;
+
 public interface  UserInterface {
 
-	String getId();
+	
+	ObjectId getId();
 	
 	String getEmail();
 	

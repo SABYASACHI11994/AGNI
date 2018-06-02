@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 	public User login(User name) throws Exception {
 		// TODO Auto-generated method stub
 		List<UserInterface> userdata = userRepository.findByEmail(name.getEmail());
-		Optional<User> nameData;
+		Optional<User> nameData=null;
 		System.out.println(userdata);
 		if (userdata.size() > 0) {
 			if (userdata.get(0).getIsActive()) {
@@ -30,10 +30,7 @@ public class UserServiceImpl implements UserService {
 			}
 
 		}
-		if(true){
-			throw new Exception();
-		}
-		
+			System.out.println(nameData);	
 		return name;
 	}
 
