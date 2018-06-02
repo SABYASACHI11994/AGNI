@@ -9,5 +9,7 @@ public interface UserService
 
 	User saveu(User name);
 	
+	String activateUser(User name);
+	
 	
 }

@@ -30,6 +30,21 @@ public class UserServiceImpl implements UserService
 		
 		return userRepository.save(name);
 	}
+
+	@Override
+	public String activateUser(User name)
+	{
+		List<UserInterface> userpartialdata = userRepository.findByEmail(name.getEmail());
+		
+		if(userpartialdata.isEmpty()){
+			
+			return "User Not Found";
+			
+		}else
+		// userpartialdata.get(0).getisActive()
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

@@ -5,4 +5,6 @@ public interface  UserInterface {
 	String getEmail();
 	
 	String getPassword();
+	
+	Boolean getisActive();
 }
