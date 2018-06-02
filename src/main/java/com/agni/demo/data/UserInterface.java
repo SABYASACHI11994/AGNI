@@ -11,5 +11,6 @@ public interface  UserInterface {
 	
 	String getPassword();
 	
+
 	Boolean getIsActive();
 }

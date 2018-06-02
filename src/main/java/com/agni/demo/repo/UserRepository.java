@@ -12,6 +12,6 @@ import com.agni.demo.data.UserInterface;
 public interface UserRepository extends MongoRepository<User, ObjectId> {
 
 	List<UserInterface> findByEmail(String name);
-//	List<UserInterface> findBy_id
+
 
 }
