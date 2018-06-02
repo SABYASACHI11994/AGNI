@@ -23,8 +23,6 @@ public class CreateUserMap
 	@Expose
 	String email;
 	
-	@Expose
-	Boolean isActive;
 	
 	@Transient
 	private OutputMapper outputMapper = new OutputMapper();

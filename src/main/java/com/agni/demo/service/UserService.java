@@ -1,5 +1,7 @@
 package com.agni.demo.service;
 
+import org.bson.types.ObjectId;
+
 import com.agni.demo.data.CreateUserMap;
 import com.agni.demo.data.User;
 
@@ -10,7 +12,7 @@ public interface UserService
 
 	CreateUserMap saveu(User name) throws Exception;
 	
-	String activateUser(User name);
-	
+	CreateUserMap activateUser(ObjectId id) throws Exception;
+
 	
 }

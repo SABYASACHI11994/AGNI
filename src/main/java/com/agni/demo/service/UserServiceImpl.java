@@ -1,8 +1,10 @@
 package com.agni.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,10 @@ public class UserServiceImpl implements UserService
 		{
 			throw new Exception("User Already Exist");
 		}
+		
+		List<String> defaultRole = new ArrayList<>();
+		defaultRole.add("member");
+		name.setRole(defaultRole);
 		User user = userRepository.save(name);
 
 		CreateUserMap createusermap = new CreateUserMap();
@@ -63,26 +69,34 @@ public class UserServiceImpl implements UserService
 		createusermap.setFirstName(user.getFirstName());
 		createusermap.setLastName(user.getLastName());
 		createusermap.setEmail(user.getEmail());
-		createusermap.setIsActive(user.getIsActive());
 
 		return createusermap;
 
 	}
 
 	@Override
-	public String activateUser(User name)
+	public CreateUserMap activateUser(ObjectId id) throws Exception
 	{
-		List<UserInterface> userpartialdata = userRepository.findByEmail(name.getEmail());
+		Optional<User> user = userRepository.findById(id);
+		
+		
+		 
+		 if(user.isPresent()) {
+			 
+		 user.get().setIsActive(true);
+		 
+		 User user1 = userRepository.save(user.get());
 
-		if (userpartialdata.isEmpty())
-		{
+			CreateUserMap createusermap = new CreateUserMap();
+			createusermap.setId(user1.getId());
+			createusermap.setFirstName(user1.getFirstName());
+			createusermap.setLastName(user1.getLastName());
+			createusermap.setEmail(user1.getEmail());
 
-			return "User Not Found";
-
-		} else
-			// userpartialdata.get(0).getisActive()
-			// TODO Auto-generated method stub
-			return null;
+			return createusermap;
+		 }
+		 
+		 throw new Exception("User does not exist.");
 	}
 
 }
