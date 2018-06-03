@@ -93,6 +93,12 @@ public class OutputResponse {
 					+ "If error is still seen,  contact your administrator.";
 			errorMessage = thrown.getMessage();
 			break;
+		case "LoginException":
+			this.statusCode = PASSWORD_FAILURE;
+			status = "Invalid request. Please try to login again.";
+			errorMessage = thrown.getMessage();
+			break;
+			
 		default:
 			this.statusCode = GENERIC_FAILURE;
 			status = "Failed with " + thrown.getMessage() + " at " + currDate.toString()

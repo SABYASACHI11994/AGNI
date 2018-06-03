@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService
 		}
 
 		List<String> defaultRole = new ArrayList<>();
-		defaultRole.add("member");
+		defaultRole.add("MEMBER");
 		name.setRole(defaultRole);
 		User user = userRepository.save(name);
 
