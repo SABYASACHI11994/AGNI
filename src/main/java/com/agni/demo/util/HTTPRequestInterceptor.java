@@ -45,8 +45,7 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 					ret=checkPrivilege(ss,requestAPI);
 					if(ret){
 						ss.setActiveSince(new Date());
-						sessionRepository.save(ss);
-						
+						sessionRepository.save(ss);	
 					}
 				}
 					
@@ -62,6 +61,9 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 //			System.out.println(requestURIParts[i]);
 //		} 
 //		System.out.println(request.getRequestURI());
+		if(!ret){
+			throw new LoginException("Invalid Authentication");
+		}
 		
 		return ret;
 	}
