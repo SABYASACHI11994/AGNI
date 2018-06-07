@@ -29,7 +29,7 @@ public class UserController
 	@Autowired
 	HttpServletResponse httpServletResponse;
 
-	@RequestMapping(value = "/login", method = { RequestMethod.POST })
+	@RequestMapping(value = "/login", method = { RequestMethod.POST }, produces = { "application/json" })
 	public String getLatestNews(@RequestBody User name)
 	{
 		System.out.println(name);
@@ -46,7 +46,7 @@ public class UserController
 		return response.toString();
 	}
 	
-	@RequestMapping(value = "/logout", method = { RequestMethod.POST })
+	@RequestMapping(value = "/logout", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
 	public String logout(HttpServletRequest httpRequest)  {
 //		System.out.println(name);
 		
@@ -63,7 +63,7 @@ public class UserController
 		return response.toString();
 	}
 
-	@RequestMapping(value = "/registeruser", method = { RequestMethod.POST })
+	@RequestMapping(value = "/registeruser", method = { RequestMethod.POST }, produces = { "application/json" })
 	public String user(@RequestBody User name)
 	{
 		OutputResponse response = new OutputResponse();
@@ -81,7 +81,7 @@ public class UserController
 	}
 	
 	
-	@RequestMapping(value = "/activateuser/{name}", method = { RequestMethod.GET })
+	@RequestMapping(value = "/activateuser/{name}", method = { RequestMethod.GET }, produces = { "application/json" })
 	 public String acivateUser(@PathVariable("name")ObjectId name)
 	{
 		
@@ -100,7 +100,7 @@ public class UserController
 	}
 	
 	
-	@RequestMapping(value = "/changepassword", method = { RequestMethod.POST })
+	@RequestMapping(value = "/changepassword", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
 	public String changePassword(@RequestBody User userdetails)
 	{
 		OutputResponse response = new OutputResponse();
@@ -117,7 +117,7 @@ public class UserController
 		return response.toString();
 	}
 	
-	@RequestMapping(value = "/changerole", method = { RequestMethod.POST })
+	@RequestMapping(value = "/changerole", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
 	public String changeRole(@RequestBody User userdetails)
 	{
 		OutputResponse response = new OutputResponse();

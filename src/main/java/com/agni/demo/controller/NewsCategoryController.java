@@ -20,13 +20,13 @@ public class NewsCategoryController {
 	
    
     
-    @RequestMapping(value = "/createNewsCategory",method = { RequestMethod.POST })
+    @RequestMapping(value = "/createNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public List<NewsCategory> createNewsCategory(@RequestBody List<NewsCategory> name) {
     	System.out.println(name);
         return newsCategoryService.saveNewsCategory(name);
     }
     
-    @RequestMapping(value = "/getNewsCategory",method = { RequestMethod.GET })
+    @RequestMapping(value = "/getNewsCategory",method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
     public List<NewsCategory> getNewsCategory() {
 //    	System.out.println(name);
         return newsCategoryService.getNewsCategory();

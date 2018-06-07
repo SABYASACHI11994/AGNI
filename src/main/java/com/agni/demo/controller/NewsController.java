@@ -41,7 +41,7 @@ public class NewsController {
 //        return personService.savePerson(name);
 //    }
     
-    @RequestMapping(value = "/createNews",method = { RequestMethod.POST })
+    @RequestMapping(value = "/createNews",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public String createNews(@RequestBody List<News> name) {
     	System.out.println(name);
     	OutputResponse response=new OutputResponse();
@@ -57,7 +57,7 @@ public class NewsController {
 //        return ;
     }
     
-    @RequestMapping(value = "/getLatestNews/{name}/{page}/{size}",method = { RequestMethod.GET })
+    @RequestMapping(value = "/getLatestNews/{name}/{page}/{size}",method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
     public Page<News> getLatestNews(@PathVariable("name") String name,@PathVariable("page") Integer page,@PathVariable("size")Integer size) {
 //    	System.out.println(name);
 //    	OutputResponse response=new OutputResponse();
