@@ -22,7 +22,7 @@ public class NewsCategoryController {
     
     @RequestMapping(value = "/createNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public List<NewsCategory> createNewsCategory(@RequestBody List<NewsCategory> name) {
-    	System.out.println(name);
+ //   	System.out.println(name);
         return newsCategoryService.saveNewsCategory(name);
     }
     
@@ -30,5 +30,10 @@ public class NewsCategoryController {
     public List<NewsCategory> getNewsCategory() {
 //    	System.out.println(name);
         return newsCategoryService.getNewsCategory();
+    }
+    
+    @RequestMapping(value = "/updateNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+    public List<NewsCategory> updateNewsCategory(@RequestBody List<NewsCategory> newsCategory) {
+        return newsCategoryService.updateNewsCategory(newsCategory);
     }
 }
