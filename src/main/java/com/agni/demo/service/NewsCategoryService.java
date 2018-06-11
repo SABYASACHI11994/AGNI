@@ -11,7 +11,7 @@ public interface NewsCategoryService
 	
 	List<NewsCategory> getNewsCategory();
 
-	List<NewsCategory> updateNewsCategory(List<NewsCategory> newsCategory) throws Exception;
+	NewsCategory updateNewsCategory(NewsCategory newsCategory) throws Exception;
 	
 	
 }

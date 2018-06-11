@@ -32,23 +32,23 @@ public class NewsCategoryServiceImpl implements NewsCategoryService
 	}
 	
 	@Override
-	public List<NewsCategory> updateNewsCategory(List<NewsCategory> newsCategory) throws Exception
+	public NewsCategory updateNewsCategory(NewsCategory newsCategory) throws Exception
 	{
-		Optional<NewsCategory> newscat = newsCategoryRepository.findById(newsCategory.get(0).getId());
+		Optional<NewsCategory> newscat = newsCategoryRepository.findById(newsCategory.getId());
 
 		if (newscat.isPresent())
 		{
 
-			newscat.get().setNewsCategory(newsCategory.get(0).getNewsCategory());
-			newscat.get().setDescription(newsCategory.get(0).getDescription());
-			newscat.get().setImage(newsCategory.get(0).getImage());
-			newscat.get().setModifiedBy(newsCategory.get(0).getModifiedBy());
-			newscat.get().setModifiedDate(newsCategory.get(0).getModifiedDate());
+			newscat.get().setNewsCategory(newsCategory.getNewsCategory());
+			newscat.get().setDescription(newsCategory.getDescription());
+			newscat.get().setImage(newsCategory.getImage());
+			newscat.get().setModifiedBy(newsCategory.getModifiedBy());
+			newscat.get().setModifiedDate(newsCategory.getModifiedDate());
 
 			@SuppressWarnings("unchecked")
-			List<NewsCategory> newscat1 = (List<NewsCategory>) newsCategoryRepository.save(newscat.get());
+			NewsCategory newscat1 =  newsCategoryRepository.save(newscat.get());
 
-			return (List<NewsCategory>) newscat1;
+			return  newscat1;
 		}
 
 		throw new Exception("News Category does not exist");

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.agni.demo.data.NewsCategory;
 import com.agni.demo.service.NewsCategoryService;
+import com.agni.demo.util.OutputResponse;
 
 @RestController
 public class NewsCategoryController {
@@ -21,19 +22,49 @@ public class NewsCategoryController {
    
     
     @RequestMapping(value = "/createNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
-    public List<NewsCategory> createNewsCategory(@RequestBody List<NewsCategory> name) {
+    public String createNewsCategory(@RequestBody List<NewsCategory> name) {
  //   	System.out.println(name);
-        return newsCategoryService.saveNewsCategory(name);
+    	OutputResponse response=new OutputResponse();
+		try {
+			List<NewsCategory> user = newsCategoryService.saveNewsCategory(name);
+			response.setResponse(user.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+//        return ;
     }
     
     @RequestMapping(value = "/getNewsCategory",method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
-    public List<NewsCategory> getNewsCategory() {
+    public String getNewsCategory() {
 //    	System.out.println(name);
-        return newsCategoryService.getNewsCategory();
+    	OutputResponse response=new OutputResponse();
+		try {
+			 List<NewsCategory> user = newsCategoryService.getNewsCategory();
+			response.setResponse(user.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+//        return newsCategoryService.getNewsCategory();
     }
     
     @RequestMapping(value = "/updateNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
-    public List<NewsCategory> updateNewsCategory(@RequestBody List<NewsCategory> newsCategory) {
-        return newsCategoryService.updateNewsCategory(newsCategory);
+    public String updateNewsCategory(@RequestBody NewsCategory newsCategory) {
+    	OutputResponse response=new OutputResponse();
+		try {
+			NewsCategory user = newsCategoryService.updateNewsCategory(newsCategory);
+			response.setResponse(user.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+//        return ;
     }
 }
