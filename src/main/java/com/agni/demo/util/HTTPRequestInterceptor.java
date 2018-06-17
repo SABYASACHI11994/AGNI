@@ -24,13 +24,16 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
 		System.out.println("Request Object"+request.toString());
+		
 		String authkey = request.getHeader("authorization");
 		boolean ret=false;
 		
 		String[] requestURIParts = request.getRequestURI().split("/");
-		if(requestURIParts.length>1){
-			String requestAPI = requestURIParts[1];	
+		logger.info(requestURIParts+" logging prehandle 1");
+		if(requestURIParts.length>2){
+			String requestAPI = requestURIParts[2];	
 			System.out.println(requestAPI);
+			logger.info(requestAPI+" logging prehandle");
 			switch (requestAPI) {
 			case "registeruser":
 			case "login":
