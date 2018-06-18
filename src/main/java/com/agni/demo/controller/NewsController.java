@@ -2,6 +2,7 @@ package com.agni.demo.controller;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -56,15 +57,46 @@ public class NewsController {
 		return response.toString();
 //        return ;
     }
+    @RequestMapping(value = "/deleteNews",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+    public String deleteNews(@RequestBody News name) {
+    	System.out.println(name);
+    	OutputResponse response=new OutputResponse();
+		try {
+			News news=newsService.deleteNews(name);
+			response.setResponse(news.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+//        return ;
+    }
+    @RequestMapping(value = "/updateNews",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+    public String updateNews(@RequestBody News name) {
+    	System.out.println(name);
+    	OutputResponse response=new OutputResponse();
+		try {
+			News news=newsService.updateNews(name);
+			response.setResponse(news.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+//        return ;
+    }
     
     @RequestMapping(value = "/getLatestNews/{name}/{page}/{size}",method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
-    public Page<News> getLatestNews(@PathVariable("name") String name,@PathVariable("page") Integer page,@PathVariable("size")Integer size) {
+    public Page<News> getLatestNews(@PathVariable("name") ObjectId name,@PathVariable("page") Integer page,@PathVariable("size")Integer size) {
 //    	System.out.println(name);
 //    	OutputResponse response=new OutputResponse();
 //    	Page<News> news=new 
 //		try {
     	Pageable pageable=new PageRequest(page, size);
-			return newsService.getNews(name,pageable);
+    	Page<News> news=newsService.getNews(name,pageable);
+			return news;
 ////			response.setResponse(news.toString());
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block

@@ -43,6 +43,7 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 			case "webjars":
 			case "swagger-resources":
 			case "v2":
+			case "error":
 				ret=true;
 				break;
 
@@ -70,6 +71,7 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 //		} 
 //		System.out.println(request.getRequestURI());
 		if(!ret){
+			response.setStatus(5000, "Invalid Authentication");
 			throw new LoginException("Invalid Authentication");
 		}
 		

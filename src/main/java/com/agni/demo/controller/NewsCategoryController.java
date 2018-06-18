@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.agni.demo.data.NewsCategory;
 import com.agni.demo.service.NewsCategoryService;
+import com.agni.demo.util.OutputMapper;
 import com.agni.demo.util.OutputResponse;
 
 @RestController
@@ -19,7 +20,7 @@ public class NewsCategoryController {
 	@Autowired
 	NewsCategoryService newsCategoryService;
 	
-   
+	private OutputMapper outputMapper = new OutputMapper();
     
     @RequestMapping(value = "/createNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public String createNewsCategory(@RequestBody List<NewsCategory> name) {
@@ -27,7 +28,7 @@ public class NewsCategoryController {
     	OutputResponse response=new OutputResponse();
 		try {
 			List<NewsCategory> user = newsCategoryService.saveNewsCategory(name);
-			response.setResponse(user.toString());
+			response.setResponse(outputMapper.gson().toJson(user));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,7 +44,7 @@ public class NewsCategoryController {
     	OutputResponse response=new OutputResponse();
 		try {
 			 List<NewsCategory> user = newsCategoryService.getNewsCategory();
-			response.setResponse(user.toString());
+			response.setResponse(outputMapper.gson().toJson(user));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,7 +59,7 @@ public class NewsCategoryController {
     	OutputResponse response=new OutputResponse();
 		try {
 			NewsCategory user = newsCategoryService.updateNewsCategory(newsCategory);
-			response.setResponse(user.toString());
+			response.setResponse(outputMapper.gson().toJson(user));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

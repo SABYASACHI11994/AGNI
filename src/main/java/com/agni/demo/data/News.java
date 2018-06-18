@@ -3,6 +3,7 @@ package com.agni.demo.data;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
@@ -17,7 +18,7 @@ public class News
 {
 	@Id
 	@Expose
-	private String id;
+	private ObjectId id;
 	@Expose
 	private String newsHeading;
 	@Expose
@@ -51,6 +52,8 @@ public class News
 	private String modifiedBy;
 	@Expose
 	private Date modifiedDate;
+	
+	private Boolean deleted=false;
 	
 //	@Transient
 //	private OutputMapper outputMapper = new OutputMapper();
