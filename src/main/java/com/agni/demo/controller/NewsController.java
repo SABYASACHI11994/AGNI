@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.agni.demo.data.News;
 import com.agni.demo.service.NewsService;
 import com.agni.demo.service.PersonService;
+import com.agni.demo.util.OutputMapper;
 import com.agni.demo.util.OutputResponse;
 
 @RestController
@@ -30,7 +31,7 @@ public class NewsController {
 	@Autowired
 	NewsService newsService;
 	
-	
+	private OutputMapper outputMapper = new OutputMapper();
 //    @RequestMapping(value = "/findByLastName",method = { RequestMethod.GET })
 //    public List<Person> findByLastName(@RequestParam(value="name", defaultValue="World") String name) {
 //        return personService.findByLastName(name);
@@ -48,7 +49,7 @@ public class NewsController {
     	OutputResponse response=new OutputResponse();
 		try {
 			List<News> news=newsService.saveNews(name);
-			response.setResponse(news.toString());
+			response.setResponse(outputMapper.gson().toJson(news));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +64,7 @@ public class NewsController {
     	OutputResponse response=new OutputResponse();
 		try {
 			News news=newsService.deleteNews(name);
-			response.setResponse(news.toString());
+			response.setResponse(outputMapper.gson().toJson(news));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,7 +79,7 @@ public class NewsController {
     	OutputResponse response=new OutputResponse();
 		try {
 			News news=newsService.updateNews(name);
-			response.setResponse(news.toString());
+			response.setResponse(outputMapper.gson().toJson(news));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
