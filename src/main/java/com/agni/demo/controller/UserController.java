@@ -147,7 +147,7 @@ public class UserController
 	}
 	
 	@CrossOrigin()
-	@RequestMapping(value = "/forgotPasswordMail", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+	@RequestMapping(value = "/forgotPasswordMail", method = { RequestMethod.POST }, produces = { "application/json" })
 	public String forgotPasswordMail(@RequestBody User userdetails)
 	{
 		OutputResponse response = new OutputResponse();
@@ -164,7 +164,7 @@ public class UserController
 		return response.toString();
 	}
 	@CrossOrigin()
-	@RequestMapping(value = "/resetPassword/{name}", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+	@RequestMapping(value = "/resetPassword/{name}", method = { RequestMethod.GET }, produces = { "application/json" })
 	public String resetPassword(@PathVariable("name")String name)
 	{
 		OutputResponse response = new OutputResponse();

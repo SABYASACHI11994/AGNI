@@ -249,8 +249,9 @@ public class UserServiceImpl implements UserService
 			User usr=user.get(0);
 			String str=generateKey(new Date()+ " code for "+usr.getEmail());
 			usr.setResetPassword(str);
-			String url=activatelink.replace(BASE_URL, domain).replace(NAME_PARAMETER, str);
+			String url=forgotPasswordMaillink.replace(BASE_URL, domain).replace(NAME_PARAMETER, str);
 			System.out.println(url);
+			userRepository.save(usr);
 			SMTPService.send(usr.getEmail(), "RESET PASSWORD", "Log on to "+url+" to reset your account");
 			return "s";
 		}
@@ -260,15 +261,19 @@ public class UserServiceImpl implements UserService
 	@Override
 	public String resetPassword(String name) {
 		// TODO Auto-generated method stub
+		String generatedString="f";
 		User user = userRepository.findFirstByResetPassword(name);
 		if(user!=null && user.getEmail()!=null){
-			String generatedString = RandomStringUtils.randomAlphanumeric(10);
+			generatedString = RandomStringUtils.randomAlphanumeric(10);
+			System.out.println(generatedString);
 			user.setPassword(encoder.encode(generatedString));
+			user.setResetPassword(null);
+			userRepository.save(user);
 			SMTPService.send(user.getEmail(), "New PASSWORD", "Your new password is "+ generatedString);
-			return "s";
+			return generatedString;
 		}
 		
-		return "f";
+		return generatedString;
 	}
 }
 
