@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ public class UserController
 	@Autowired
 	HttpServletResponse httpServletResponse;
 
+	@CrossOrigin()
 	@RequestMapping(value = "/login", method = { RequestMethod.POST }, produces = { "application/json" })
 	public String getLatestNews(@RequestBody User name)
 	{
@@ -46,6 +48,7 @@ public class UserController
 		return response.toString();
 	}
 	
+	@CrossOrigin()
 	@RequestMapping(value = "/logout", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
 	public String logout(HttpServletRequest httpRequest)  {
 //		System.out.println(name);
@@ -63,6 +66,7 @@ public class UserController
 		return response.toString();
 	}
 
+	@CrossOrigin()
 	@RequestMapping(value = "/registeruser", method = { RequestMethod.POST }, produces = { "application/json" })
 	public String user(@RequestBody User name)
 	{
@@ -80,7 +84,7 @@ public class UserController
 		return response.toString();
 	}
 	
-	
+	@CrossOrigin()
 	@RequestMapping(value = "/activateuser/{name}", method = { RequestMethod.GET }, produces = { "application/json" })
 	 public String acivateUser(@PathVariable("name")ObjectId name)
 	{
@@ -99,7 +103,7 @@ public class UserController
 		return response.toString();
 	}
 	
-	
+	@CrossOrigin()
 	@RequestMapping(value = "/changepassword", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
 	public String changePassword(@RequestBody User userdetails)
 	{
@@ -117,6 +121,7 @@ public class UserController
 		return response.toString();
 	}
 	
+	@CrossOrigin()
 	@RequestMapping(value = "/changerole", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
 	public String changeRole(@RequestBody User userdetails)
 	{

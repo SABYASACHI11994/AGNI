@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +43,7 @@ public class NewsController {
 //    	System.out.println(name);
 //        return personService.savePerson(name);
 //    }
-    
+	@CrossOrigin()
     @RequestMapping(value = "/createNews",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public String createNews(@RequestBody List<News> name) {
     	System.out.println(name);
@@ -58,7 +59,9 @@ public class NewsController {
 		return response.toString();
 //        return ;
     }
-    @RequestMapping(value = "/deleteNews",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+    
+	@CrossOrigin()
+	@RequestMapping(value = "/deleteNews",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public String deleteNews(@RequestBody News name) {
     	System.out.println(name);
     	OutputResponse response=new OutputResponse();
@@ -73,7 +76,9 @@ public class NewsController {
 		return response.toString();
 //        return ;
     }
-    @RequestMapping(value = "/updateNews",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+   
+	@CrossOrigin()
+	@RequestMapping(value = "/updateNews",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public String updateNews(@RequestBody News name) {
     	System.out.println(name);
     	OutputResponse response=new OutputResponse();
@@ -89,6 +94,7 @@ public class NewsController {
 //        return ;
     }
     
+	@CrossOrigin()
     @RequestMapping(value = "/getLatestNews/{name}/{page}/{size}",method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
     public Page<News> getLatestNews(@PathVariable("name") ObjectId name,@PathVariable("page") Integer page,@PathVariable("size")Integer size) {
 //    	System.out.println(name);

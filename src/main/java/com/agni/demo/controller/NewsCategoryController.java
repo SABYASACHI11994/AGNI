@@ -3,6 +3,7 @@ package com.agni.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ public class NewsCategoryController {
 	
 	private OutputMapper outputMapper = new OutputMapper();
     
+	@CrossOrigin()
     @RequestMapping(value = "/createNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public String createNewsCategory(@RequestBody List<NewsCategory> name) {
  //   	System.out.println(name);
@@ -38,6 +40,7 @@ public class NewsCategoryController {
 //        return ;
     }
     
+	@CrossOrigin()
     @RequestMapping(value = "/getNewsCategory",method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
     public String getNewsCategory() {
 //    	System.out.println(name);
@@ -54,6 +57,7 @@ public class NewsCategoryController {
 //        return newsCategoryService.getNewsCategory();
     }
     
+	@CrossOrigin()
     @RequestMapping(value = "/updateNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public String updateNewsCategory(@RequestBody NewsCategory newsCategory) {
     	OutputResponse response=new OutputResponse();
