@@ -23,6 +23,9 @@ public class CreateUserMap
 	@Expose
 	String email;
 	
+	@Expose
+	Integer msgCode;
+	
 	
 	@Transient
 	private OutputMapper outputMapper = new OutputMapper();

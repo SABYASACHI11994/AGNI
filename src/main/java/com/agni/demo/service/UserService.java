@@ -1,6 +1,9 @@
 package com.agni.demo.service;
 
 import com.agni.demo.data.Login;
+
+import java.security.NoSuchAlgorithmException;
+
 import org.bson.types.ObjectId;
 
 import com.agni.demo.data.CreateUserMap;
@@ -20,6 +23,10 @@ public interface UserService
 	CreateUserMap changePassword(User userdetails) throws Exception;
 	
 	CreateUserMap changeRole(User userdetails) throws Exception;
+
+	String forgotPasswordMail(User userdetails) throws NoSuchAlgorithmException;
+
+	String resetPassword(String name);
 
 	
 }

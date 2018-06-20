@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.agni.demo.data.CreateUserMap;
 import com.agni.demo.data.Login;
@@ -21,6 +22,7 @@ import com.agni.demo.util.OutputResponse;
 @RestController
 public class UserController
 {
+	ModelAndView mav = new ModelAndView();
 
 	// private static final String template = "Hello, %s!";
 	// private final AtomicLong counter = new AtomicLong();
@@ -86,21 +88,26 @@ public class UserController
 	
 	@CrossOrigin()
 	@RequestMapping(value = "/activateuser/{name}", method = { RequestMethod.GET }, produces = { "application/json" })
-	 public String acivateUser(@PathVariable("name")ObjectId name)
+	 public ModelAndView  acivateUser(@PathVariable("name")ObjectId name)
 	{
 		
+        
 		OutputResponse response = new OutputResponse();
 		try
 		{			
 			CreateUserMap user = userService.activateUser(name);
 			response.setResponse(user.toString());
+			mav.addObject("activateSuccess", "activateSuccess");
+	        mav.setViewName("../activateSuccess.html");
+			
 		} catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			response.setError(e);
+			mav.addObject("activateError", "activateError");
+	        mav.setViewName("../activateError.html");
 		}
-		return response.toString();
+		return mav;
 	}
 	
 	@CrossOrigin()
@@ -129,6 +136,41 @@ public class UserController
 		try
 		{
 			CreateUserMap user = userService.changeRole(userdetails);
+			response.setResponse(user.toString());
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+	}
+	
+	@CrossOrigin()
+	@RequestMapping(value = "/forgotPasswordMail", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+	public String forgotPasswordMail(@RequestBody User userdetails)
+	{
+		OutputResponse response = new OutputResponse();
+		try
+		{
+			String user = userService.forgotPasswordMail(userdetails);
+			response.setResponse(user.toString());
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+	}
+	@CrossOrigin()
+	@RequestMapping(value = "/resetPassword/{name}", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+	public String resetPassword(@PathVariable("name")String name)
+	{
+		OutputResponse response = new OutputResponse();
+		try
+		{
+			String user = userService.resetPassword(name);
 			response.setResponse(user.toString());
 		} catch (Exception e)
 		{

@@ -30,8 +30,8 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 		
 		String[] requestURIParts = request.getRequestURI().split("/");
 		logger.info(requestURIParts+" logging prehandle 1");
-		if(requestURIParts.length>2){
-			String requestAPI = requestURIParts[2];	
+		if(requestURIParts.length>1){
+			String requestAPI = requestURIParts[1];	
 			System.out.println(requestAPI);
 			logger.info(requestAPI+" logging prehandle");
 			switch (requestAPI) {
@@ -44,6 +44,8 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 			case "swagger-resources":
 			case "v2":
 			case "error":
+			case "activateSuccess":
+			case "activateSuccess.html":
 				ret=true;
 				break;
 

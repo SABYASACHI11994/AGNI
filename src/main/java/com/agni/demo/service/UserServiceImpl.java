@@ -2,18 +2,21 @@ package com.agni.demo.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.agni.demo.data.CreateUserMap;
 import com.agni.demo.data.Login;
 import com.agni.demo.data.Session;
-import com.agni.demo.data.CreateUserMap;
 import com.agni.demo.data.User;
 import com.agni.demo.data.UserInterface;
 import com.agni.demo.repo.SessionRepository;
@@ -31,9 +34,13 @@ public class UserServiceImpl implements UserService
 	@Autowired
 	SessionRepository sessionRepository;
 	
+	PasswordEncoder encoder   = new BCryptPasswordEncoder();
+	
 	private final String NAME_PARAMETER="NAME_PARAMETER";
 	private final String BASE_URL="BASE_URL";
 	private String activatelink=ConfigProperties.getPropertyByName("activate-link");
+	private String forgotPasswordMaillink=ConfigProperties.getPropertyByName("forgotPasswordMaillink");
+	
 	private String domain=ConfigProperties.getPropertyByName("domain-name");
 
 	@Override
@@ -77,11 +84,11 @@ public class UserServiceImpl implements UserService
 		return login;
 	}
 
-	private boolean checkPassword(String password, String password2)
+	private boolean checkPassword(String inpassword, String savedpassword2)
 	{
 		// TODO Auto-generated method stub
 
-		return password.equals(password2);
+		return encoder.matches(inpassword, savedpassword2);
 	}
 
 	@Override
@@ -91,28 +98,47 @@ public class UserServiceImpl implements UserService
 		List<UserInterface> userpartialdata = userRepository.findByEmail(name.getEmail());
 		if (userpartialdata.size() > 0)
 		{
+			if(!userpartialdata.get(0).getIsActive()){
+				return sendMail(userRepository.findById(userpartialdata.get(0).getId()).get(),201);
+			}
 			throw new Exception("User Already Exist");
-		}
+		} 
 
 		List<String> defaultRole = new ArrayList<>();
 		defaultRole.add("MEMBER");
 		name.setRole(defaultRole);
+		name.setPassword(encoder.encode(name.getPassword()));
 		User user = userRepository.save(name);
 
+//		CreateUserMap createusermap = new CreateUserMap();
+//		createusermap.setId(user.getId());
+//		createusermap.setFirstName(user.getFirstName());
+//		createusermap.setLastName(user.getLastName());
+//		createusermap.setEmail(user.getEmail());
+//
+//		String url=activatelink.replace(BASE_URL, domain).replace(NAME_PARAMETER, user.getId().toString());
+//		System.out.println(url);
+//		SMTPService.send(user.getEmail(), "Account Activation", "Log on to "+url+" to actiavte your account");
+//		
+		return sendMail(user,200);
+
+	}
+	
+	public CreateUserMap sendMail(User user,Integer msgCode) throws Exception{
 		CreateUserMap createusermap = new CreateUserMap();
 		createusermap.setId(user.getId());
 		createusermap.setFirstName(user.getFirstName());
 		createusermap.setLastName(user.getLastName());
 		createusermap.setEmail(user.getEmail());
+		createusermap.setMsgCode(msgCode);
 
 		String url=activatelink.replace(BASE_URL, domain).replace(NAME_PARAMETER, user.getId().toString());
 		System.out.println(url);
 		SMTPService.send(user.getEmail(), "Account Activation", "Log on to "+url+" to actiavte your account");
 		
 		return createusermap;
-
+		
 	}
-
 	
 	@Override
 	public CreateUserMap activateUser(ObjectId id) throws Exception
@@ -175,7 +201,7 @@ public class UserServiceImpl implements UserService
 			throw new Exception("User does not exists with emailid - " +userdetails.getEmail());
 		}
 
-		if (userdetails.getPassword().equalsIgnoreCase(user.get(0).getPassword()) )
+		if (checkPassword(userdetails.getPassword(), user.get(0).getPassword()) )
 		{
 			user.get(0).setPassword(userdetails.getNewPassword());
 			User user1 = userRepository.save(user.get(0));
@@ -212,6 +238,37 @@ public class UserServiceImpl implements UserService
 			createusermap.setEmail(user1.getEmail());
 
 			return createusermap;
+	}
+
+	
+	@Override
+	public String forgotPasswordMail(User userdetails) throws NoSuchAlgorithmException {
+		// TODO Auto-generated method stub
+		List<User> user = userRepository.findCompleteByEmail(userdetails.getEmail());
+		if(user.size()>0){
+			User usr=user.get(0);
+			String str=generateKey(new Date()+ " code for "+usr.getEmail());
+			usr.setResetPassword(str);
+			String url=activatelink.replace(BASE_URL, domain).replace(NAME_PARAMETER, str);
+			System.out.println(url);
+			SMTPService.send(usr.getEmail(), "RESET PASSWORD", "Log on to "+url+" to reset your account");
+			return "s";
+		}
+		return "f";
+	}
+
+	@Override
+	public String resetPassword(String name) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findFirstByResetPassword(name);
+		if(user!=null && user.getEmail()!=null){
+			String generatedString = RandomStringUtils.randomAlphanumeric(10);
+			user.setPassword(encoder.encode(generatedString));
+			SMTPService.send(user.getEmail(), "New PASSWORD", "Your new password is "+ generatedString);
+			return "s";
+		}
+		
+		return "f";
 	}
 }
 

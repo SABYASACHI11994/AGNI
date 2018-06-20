@@ -15,6 +15,8 @@ public interface UserRepository extends MongoRepository<User, ObjectId> {
 	
 	List<User> findCompleteByEmail(String email);
 
+	User findFirstByResetPassword(String name);
+
 //	User saveAll(Optional<User> user);
 	
 //	List<UserInterface> findById(?ObjectId id);

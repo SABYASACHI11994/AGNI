@@ -66,6 +66,9 @@ public class User
 	@Expose
 	private String profileImage;
 	
+	@Expose
+	private String resetPassword;
+	
 	@Transient
 	private OutputMapper outputMapper = new OutputMapper();
 
