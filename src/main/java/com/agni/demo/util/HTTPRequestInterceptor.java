@@ -58,6 +58,7 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 
 			default:
 				Session ss = sessionRepository.findFirstBySessionKey(authkey);
+				logger.info(ss.toString());
 				ret = checkActive(ss);
 				if (ret) {
 					ret = checkPrivilege(ss, requestAPI);
