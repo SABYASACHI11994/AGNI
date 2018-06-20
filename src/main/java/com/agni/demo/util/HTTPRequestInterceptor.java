@@ -21,19 +21,20 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
 	SessionRepository sessionRepository;
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
-		System.out.println("Request Object"+request.toString());
-		
+		System.out.println("Request Object" + request.toString());
+
 		String authkey = request.getHeader("authorization");
-		boolean ret=false;
-		
+		boolean ret = false;
+
 		String[] requestURIParts = request.getRequestURI().split("/");
-		logger.info(requestURIParts+" logging prehandle 1");
-		if(requestURIParts.length>2){
-			String requestAPI = requestURIParts[2];	
+		logger.info(requestURIParts + " logging prehandle 1");
+		if (requestURIParts.length > 2) {
+			String requestAPI = requestURIParts[2];
 			System.out.println(requestAPI);
-			logger.info(requestAPI+" logging prehandle");
+			logger.info(requestAPI + " logging prehandle");
 			switch (requestAPI) {
 			case "registeruser":
 			case "login":
@@ -48,43 +49,46 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 			case "forgotPasswordMail":
 			case "resetPassword":
 			case "activateSuccess.html":
-				ret=true;
+			case "activateError.html":
+			case "activateError":
+
+				ret = true;
 				break;
 
 			default:
-				Session ss=sessionRepository.findFirstBySessionKey(authkey);
-				ret=checkActive(ss);
-				if(ret){
-					ret=checkPrivilege(ss,requestAPI);
-					if(ret){
+				Session ss = sessionRepository.findFirstBySessionKey(authkey);
+				ret = checkActive(ss);
+				if (ret) {
+					ret = checkPrivilege(ss, requestAPI);
+					if (ret) {
 						ss.setActiveSince(new Date());
-						sessionRepository.save(ss);	
+						sessionRepository.save(ss);
 					}
 				}
-					
-					
-				
+
 				break;
 			}
-		}else{
-			ret=true;
+		} else {
+			ret = true;
 		}
-		
-//		for (int i = 0; i < requestURIParts.length; i++) {
-//			System.out.println(requestURIParts[i]);
-//		} 
-//		System.out.println(request.getRequestURI());
-		if(!ret){
+
+		// for (int i = 0; i < requestURIParts.length; i++) {
+		// System.out.println(requestURIParts[i]);
+		// }
+		// System.out.println(request.getRequestURI());
+		if (!ret) {
 			response.setStatus(5000, "Invalid Authentication");
 			throw new LoginException("Invalid Authentication");
 		}
-		
+
 		return ret;
 	}
-	private boolean checkPrivilege(Session ss,String path) {
+
+	private boolean checkPrivilege(Session ss, String path) {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
 	private boolean checkActive(Session ss) {
 		// TODO Auto-generated method stub
 		return ss.getIsActive();

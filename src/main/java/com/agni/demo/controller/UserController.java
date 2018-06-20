@@ -88,13 +88,13 @@ public class UserController
 	
 	@CrossOrigin()
 	@RequestMapping(value = "/activateuser/{name}", method = { RequestMethod.GET }, produces = { "application/json" })
-	 public ModelAndView  acivateUser(@PathVariable("name")ObjectId name)
+	 public ModelAndView  acivateUser(@PathVariable("name")String name1)
 	{
 		
-        
+		
 		OutputResponse response = new OutputResponse();
 		try
-		{			
+		{			ObjectId name=new ObjectId(name1);
 			CreateUserMap user = userService.activateUser(name);
 			response.setResponse(user.toString());
 			mav.addObject("activateSuccess", "activateSuccess");
