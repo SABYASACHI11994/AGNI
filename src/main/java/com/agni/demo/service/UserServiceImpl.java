@@ -203,7 +203,7 @@ public class UserServiceImpl implements UserService
 
 		if (checkPassword(userdetails.getPassword(), user.get(0).getPassword()) )
 		{
-			user.get(0).setPassword(userdetails.getNewPassword());
+			user.get(0).setPassword(encoder.encode( userdetails.getNewPassword()));
 			User user1 = userRepository.save(user.get(0));
 
 			CreateUserMap createusermap = new CreateUserMap();
