@@ -27,7 +27,7 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("Request Object" + request.toString());
 
 		String authkey = request.getHeader("authorization");
-		logger.info(authkey);
+		logger.info(authkey+" authkey");
 		boolean ret = false;
 
 		String[] requestURIParts = request.getRequestURI().split("/");
