@@ -34,7 +34,7 @@ public class UserController
 
 	@CrossOrigin()
 	@RequestMapping(value = "/login", method = { RequestMethod.POST }, produces = { "application/json" })
-	public String getLatestNews(@RequestBody User name)
+	public String login(@RequestBody User name)
 	{
 		System.out.println(name);
 		
@@ -163,6 +163,7 @@ public class UserController
 		}
 		return response.toString();
 	}
+	
 	@CrossOrigin()
 	@RequestMapping(value = "/resetPassword/{name}", method = { RequestMethod.GET }, produces = { "application/json" })
 	public String resetPassword(@PathVariable("name")String name)
@@ -181,4 +182,21 @@ public class UserController
 		return response.toString();
 	}
 	
+	@CrossOrigin()
+	@RequestMapping(value = "/updateUser", method = { RequestMethod.GET }, produces = { "application/json" })
+	public String updateUser(@RequestBody User name)
+	{
+		OutputResponse response = new OutputResponse();
+		try
+		{
+			User user = userService.updateUser(name);
+			response.setResponse(user.toString());
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+	}
 }

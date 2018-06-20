@@ -28,5 +28,7 @@ public interface UserService
 
 	String resetPassword(String name);
 
+	User updateUser(User name);
+
 	
 }
