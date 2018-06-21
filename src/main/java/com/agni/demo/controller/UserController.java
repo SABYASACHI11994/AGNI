@@ -183,7 +183,7 @@ public class UserController
 	}
 	
 	@CrossOrigin()
-	@RequestMapping(value = "/updateUser", method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
+	@RequestMapping(value = "/updateUser", method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
 	public String updateUser(@RequestBody User name)
 	{
 		OutputResponse response = new OutputResponse();

@@ -24,9 +24,9 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
-		if(true){
-			return true;
-		}
+		// if(true){
+		// 	return true;
+		// }
 		System.out.println("Request Object" + request.toString());
 
 		String authkey = request.getHeader("authorization");
