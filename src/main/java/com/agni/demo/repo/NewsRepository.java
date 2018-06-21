@@ -10,6 +10,8 @@ import com.agni.demo.data.News;
 public interface NewsRepository extends MongoRepository<News, ObjectId> {
 
 	
-	Page<News> findByNewsCategory_IdOrderByCreatedDateDesc(ObjectId id,Pageable pageable);
+//	Page<News> findByNewsCategory_IdOrderByCreatedDateDesc(ObjectId id,Pageable pageable);
+
+	Page<News> findByNewsCategory_IdAndDeletedOrderByCreatedDateDesc(ObjectId news, boolean b, Pageable pageable);
 	
 }

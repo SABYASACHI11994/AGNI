@@ -72,4 +72,21 @@ public class NewsCategoryController {
 		return response.toString();
 //        return ;
     }
+	
+	@CrossOrigin()
+    @RequestMapping(value = "/deleteNewsCategory",method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
+    public String deleteNewsCategory(@RequestBody NewsCategory name) {
+//    	System.out.println(name);
+    	OutputResponse response=new OutputResponse();
+		try {
+			 NewsCategory user = newsCategoryService.deleteNewsCategory(name);
+			response.setResponse(outputMapper.gson().toJson(user));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.setError(e);
+		}
+		return response.toString();
+//        return newsCategoryService.getNewsCategory();
+    }
 }

@@ -35,6 +35,8 @@ public class NewsCategory
 	@Expose
 	private Date modifiedDate;
 	
+	@Expose
+	private Boolean deleted=false;
 
 //	@Transient
 //	private OutputMapper outputMapper = new OutputMapper();
