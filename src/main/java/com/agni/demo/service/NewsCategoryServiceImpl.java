@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agni.demo.data.CreateUserMap;
+import com.agni.demo.data.News;
 import com.agni.demo.data.NewsCategory;
 import com.agni.demo.data.User;
 import com.agni.demo.repo.NewsCategoryRepository;
@@ -52,6 +53,14 @@ public class NewsCategoryServiceImpl implements NewsCategoryService
 		}
 
 		throw new Exception("News Category does not exist");
+	}
+
+	@Override
+	public NewsCategory deleteNewsCategory(NewsCategory name) {
+		// TODO Auto-generated method stub
+		NewsCategory news=newsCategoryRepository.findById(name.getId()).get();
+		news.setDeleted(true);
+		return newsCategoryRepository.save(news);
 	}
 	
 }

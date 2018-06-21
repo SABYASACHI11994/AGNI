@@ -30,7 +30,7 @@ public class NewsServiceImpl implements NewsService
 	@Override
 	public Page<News> getNews(ObjectId news,Pageable pageable) {
 		// TODO Auto-generated method stub
-		return newsRepository.findByNewsCategory_IdOrderByCreatedDateDesc(news,pageable);
+		return newsRepository.findByNewsCategory_IdAndDeletedOrderByCreatedDateDesc(news,false,pageable);
 	}
 
 	@Override
