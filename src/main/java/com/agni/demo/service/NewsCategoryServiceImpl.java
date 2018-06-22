@@ -29,7 +29,7 @@ public class NewsCategoryServiceImpl implements NewsCategoryService
 	@Override
 	public List<NewsCategory> getNewsCategory() {
 		// TODO Auto-generated method stub
-		return newsCategoryRepository.findAll();
+		return newsCategoryRepository.findByDeleted(false);
 	}
 	
 	@Override
