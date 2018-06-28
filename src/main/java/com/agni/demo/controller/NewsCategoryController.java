@@ -74,7 +74,7 @@ public class NewsCategoryController {
     }
 	
 	@CrossOrigin()
-    @RequestMapping(value = "/deleteNewsCategory",method = { RequestMethod.GET },headers = "Authorization", produces = { "application/json" })
+    @RequestMapping(value = "/deleteNewsCategory",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
     public String deleteNewsCategory(@RequestBody NewsCategory name) {
 //    	System.out.println(name);
     	OutputResponse response=new OutputResponse();
