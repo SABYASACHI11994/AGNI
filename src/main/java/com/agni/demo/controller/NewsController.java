@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agni.demo.data.News;
+import com.agni.demo.data.SearchInput;
 import com.agni.demo.service.NewsService;
 import com.agni.demo.service.PersonService;
 import com.agni.demo.util.OutputMapper;
@@ -103,6 +104,26 @@ public class NewsController {
 //		try {
     	Pageable pageable=new PageRequest(page, size);
     	Page<News> news=newsService.getNews(name,pageable);
+			return news;
+////			response.setResponse(news.toString());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			response.setError(e);
+//		}
+//		return news;
+//        return ;
+    }
+	
+	@CrossOrigin()
+    @RequestMapping(value = "/getLatestNewsSearch/{page}/{size}",method = { RequestMethod.POST },headers = "Authorization", produces = { "application/json" })
+    public Page<News> getLatestNewsSearch(@RequestBody SearchInput search,@PathVariable("page") Integer page,@PathVariable("size")Integer size) {
+//    	System.out.println(name);
+//    	OutputResponse response=new OutputResponse();
+//    	Page<News> news=new 
+//		try {
+    	Pageable pageable=new PageRequest(page, size);
+    	Page<News> news=newsService.getNewsSearch(search.getId(),search.getSearch(),pageable);
 			return news;
 ////			response.setResponse(news.toString());
 //		} catch (Exception e) {

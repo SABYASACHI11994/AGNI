@@ -55,6 +55,9 @@ public class News
 	
 	private Boolean deleted=false;
 	
+	@Expose
+	private Boolean isAgenda;
+	
 //	@Transient
 //	private OutputMapper outputMapper = new OutputMapper();
 //

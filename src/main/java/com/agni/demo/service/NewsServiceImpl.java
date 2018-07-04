@@ -56,5 +56,11 @@ public class NewsServiceImpl implements NewsService
 				
 		return newsRepository.save(news);
 	}
+
+	@Override
+	public Page<News> getNewsSearch(ObjectId news,String search, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return newsRepository.findByNewsCategory_IdAndDeletedAndNewsHeadingIgnoreCaseLikeOrNewsCategory_IdAndDeletedAndNewsSubHeadingIgnoreCaseLikeOrderByCreatedDateDesc(news,false,search,news,false,search,pageable);
+	}
 	
 }

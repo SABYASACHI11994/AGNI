@@ -18,4 +18,6 @@ public interface NewsService
 	News deleteNews(News name);
 
 	News updateNews(News name);
+
+	Page<News> getNewsSearch(ObjectId name,String search, Pageable pageable);
 }
