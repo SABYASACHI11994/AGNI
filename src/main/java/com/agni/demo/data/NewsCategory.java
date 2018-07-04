@@ -38,6 +38,9 @@ public class NewsCategory
 	@Expose
 	private Boolean deleted=false;
 
+	@Expose
+	private Boolean isAgenda;
+	
 //	@Transient
 //	private OutputMapper outputMapper = new OutputMapper();
 //
