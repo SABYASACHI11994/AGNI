@@ -1,6 +1,9 @@
 package com.agni.demo.controller;
 
+import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +21,8 @@ import com.agni.demo.util.OutputResponse;
 public class NewsCategoryController {
 
 	
+	
+	 
 	@Autowired
 	NewsCategoryService newsCategoryService;
 	

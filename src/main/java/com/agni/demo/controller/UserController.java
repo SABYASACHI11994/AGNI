@@ -148,20 +148,24 @@ public class UserController
 	
 	@CrossOrigin()
 	@RequestMapping(value = "/forgotPasswordMail", method = { RequestMethod.POST }, produces = { "application/json" })
-	public String forgotPasswordMail(@RequestBody User userdetails)
+	public ModelAndView forgotPasswordMail(@RequestBody User userdetails)
 	{
 		OutputResponse response = new OutputResponse();
 		try
 		{
 			String user = userService.forgotPasswordMail(userdetails);
 			response.setResponse(user.toString());
+			mav.addObject("activateError", "activateError");
+	        mav.setViewName("../forgotSuccess.html");
 		} catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			response.setError(e);
+			mav.addObject("activateError", "activateError");
+	        mav.setViewName("../forgoterror.html");
 		}
-		return response.toString();
+		return mav;
 	}
 	
 	@CrossOrigin()

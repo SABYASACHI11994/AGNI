@@ -12,6 +12,8 @@ public interface NewsCategoryRepository extends MongoRepository<NewsCategory, Ob
 
 	List<NewsCategory> findByDeleted(boolean b);
 
+	List<NewsCategory> findByNewsCategoryIgnoreCase(String string);
+
 	
 
 }
