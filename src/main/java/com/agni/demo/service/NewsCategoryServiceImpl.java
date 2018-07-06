@@ -26,8 +26,8 @@ public class NewsCategoryServiceImpl implements NewsCategoryService
 		 List<NewsCategory> cat=newsCategoryRepository.findByNewsCategoryIgnoreCase("Agenda");
 		 if(cat.size()==0){
 			 NewsCategory c=new NewsCategory();
-			 c.setNewsCategory("Agenda");
-			 c.setDescription("Agenda");
+			 c.setNewsCategory(ConfigProperties.getPropertyByName("agenda-name"));
+			 c.setDescription(ConfigProperties.getPropertyByName("agenda-desc"));
 			 ArrayList<String> x =new ArrayList<String>();
 			 x.add(ConfigProperties.getPropertyByName("agenda-image"));	
 			c.setImage(x);
