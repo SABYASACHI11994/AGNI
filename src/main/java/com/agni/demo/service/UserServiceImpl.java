@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService
 
 		String url=activatelink.replace(BASE_URL, domain).replace(NAME_PARAMETER, user.getId().toString());
 		System.out.println(url);
-		SMTPService.send(user.getEmail(), "Account Activation", "Log on to "+url+" to actiavte your account");
+		SMTPService.send(user.getEmail(),  ConfigProperties.getPropertyByName("account-activation-subject"), "Log on to "+url+" to actiavte your account");
 		
 		return createusermap;
 		
@@ -252,7 +252,7 @@ public class UserServiceImpl implements UserService
 			String url=forgotPasswordMaillink.replace(BASE_URL, domain).replace(NAME_PARAMETER, str);
 			System.out.println(url);
 			userRepository.save(usr);
-			SMTPService.send(usr.getEmail(), "RESET PASSWORD", "Log on to "+url+" to reset your account");
+			SMTPService.send(usr.getEmail(), ConfigProperties.getPropertyByName("resetpassword-subject"), "Log on to "+url+" to reset your account");
 			return "s";
 		}
 		return "f";
@@ -269,7 +269,7 @@ public class UserServiceImpl implements UserService
 			user.setPassword(encoder.encode(generatedString));
 			user.setResetPassword(null);
 			userRepository.save(user);
-			SMTPService.send(user.getEmail(), "New PASSWORD", "Your new password is "+ generatedString);
+			SMTPService.send(user.getEmail(), ConfigProperties.getPropertyByName("newpassword-subject"), "Your new password is "+ generatedString);
 			return generatedString;
 		}
 		
