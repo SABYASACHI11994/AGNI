@@ -204,7 +204,7 @@ public class NewsController {
 		}
 		System.out.println("ImageFileId = " + imageFileId);
 
-		return "{\"id\":" + imageFileId + "}";
+		return "{\"id\":\"" + imageFileId + "\"}";
 	}
 
 	@Autowired 
