@@ -31,6 +31,7 @@ public class NewsCategoryServiceImpl implements NewsCategoryService
 			 ArrayList<String> x =new ArrayList<String>();
 			 x.add(ConfigProperties.getPropertyByName("agenda-image"));	
 			c.setImage(x);
+			c.setIsAgenda(true);
 			 newsCategoryRepository.save(c);
 			 System.out.println("no agenda");
 		 }else{
