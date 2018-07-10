@@ -41,7 +41,7 @@ public class News
 	@Expose
 	private List<String> links;
 	@Expose
-	private List<Document> documents;
+	private List<String> documents;
 	@Expose
 	private List<NewsCategory> newsCategory;
 	@Expose
