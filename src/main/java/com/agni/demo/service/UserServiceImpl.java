@@ -108,6 +108,7 @@ public class UserServiceImpl implements UserService
 		defaultRole.add("MEMBER");
 		name.setRole(defaultRole);
 		name.setPassword(encoder.encode(name.getPassword()));
+		name.setIsActive(false);
 		User user = userRepository.save(name);
 
 //		CreateUserMap createusermap = new CreateUserMap();
